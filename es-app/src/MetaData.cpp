@@ -17,8 +17,8 @@ MetaDataDecl gameDecls[] = {
 	{"releasedate", MD_DATE,                "",                 false,      "release date",         "enter release date"},
 	{"developer",   MD_STRING,              "",                 false,      "developer",            "enter game developer"},
 	{"publisher",   MD_STRING,              "",                 false,      "publisher",            "enter game publisher"},
-	{"genre",       MD_STRING,              "caca",                 false,      "genre",                "enter game genre"},
-	{"players",     MD_INT,                 "1",                false,      "players",              "enter number of players"},
+	{"genre",       MD_STRING,              "",                 false,      "genre",                "enter game genre"},
+	{"players",     MD_INT,                 "",                 false,      "players",              "enter number of players"},
 	{"favorite",    MD_BOOL,                "false",            false,      "favorite",             "enter favorite off/on"},
 	{"hidden",      MD_BOOL,                "false",            false,      "hidden",               "enter hidden off/on" },
 	{"kidgame",     MD_BOOL,                "false",            false,      "kidgame",              "enter kidgame off/on" },
@@ -39,8 +39,8 @@ MetaDataDecl folderDecls[] = {
 	{"releasedate", MD_DATE,                "",                 false,      "release date",         "enter release date"},
 	{"developer",   MD_STRING,              "",                 false,      "developer",            "enter game developer"},
 	{"publisher",   MD_STRING,              "",                 false,      "publisher",            "enter game publisher"},
-	{"genre",       MD_STRING,              "caca2",            false,      "genre",                "enter game genre"},
-	{"players",     MD_INT,                 "1",                false,      "players",              "enter number of players"}
+	{"genre",       MD_STRING,              "",                 false,      "genre",                "enter game genre"},
+	{"players",     MD_INT,                 "",                 false,      "players",              "enter number of players"}
 };
 const std::vector<MetaDataDecl> folderMDD(folderDecls, folderDecls + sizeof(folderDecls) / sizeof(folderDecls[0]));
 
