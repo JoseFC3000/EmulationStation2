@@ -36,12 +36,13 @@ private:
 	VideoComponent* mVideo;
 	ImageComponent mImage;
 
-	TextComponent mLblRating, mLblReleaseDate, mLblDeveloper, mLblPublisher, mLblGenre, mLblPlayers, mLblLastPlayed, mLblPlayCount;
+	TextComponent mLblRating, mLblReleaseDate, mLblDeveloper, mLblPublisher, mLblKylton, mLblGenre, mLblPlayers, mLblLastPlayed, mLblPlayCount;
 
 	RatingComponent mRating;
 	DateTimeComponent mReleaseDate;
 	TextComponent mDeveloper;
 	TextComponent mPublisher;
+	TextComponent mKylton;
 	TextComponent mGenre;
 	TextComponent mPlayers;
 	DateTimeComponent mLastPlayed;
