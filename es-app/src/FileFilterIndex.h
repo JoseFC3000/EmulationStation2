@@ -15,7 +15,6 @@ enum FilterIndexType
 	PLAYER_FILTER,
 	PUBDEV_FILTER,
 	KYLTON_FILTER,
-	SYSTEM_FILTER,
 	RATINGS_FILTER,
 	FAVORITES_FILTER,
 	HIDDEN_FILTER,
@@ -45,7 +44,7 @@ public:
 	void clearAllFilters();
 	void debugPrintIndexes();
 	bool showFile(FileData* game);
-	bool isFiltered() { return (filterByGenre || filterByPlayers || filterByPubDev || filterByKylton || filterBySystem || filterByRatings || filterByFavorites || filterByHidden || filterByKidGame); };
+	bool isFiltered() { return (filterByGenre || filterByPlayers || filterByPubDev || filterByKylton || filterByRatings || filterByFavorites || filterByHidden || filterByKidGame); };
 	bool isKeyBeingFilteredBy(std::string key, FilterIndexType type);
 	std::vector<FilterDataDecl>& getFilterDataDecls();
 
@@ -62,7 +61,6 @@ private:
 	void managePlayerEntryInIndex(FileData* game, bool remove = false);
 	void managePubDevEntryInIndex(FileData* game, bool remove = false);
 	void manageKyltonEntryInIndex(FileData* game, bool remove = false);
-	void manageSystemEntryInIndex(FileData* game, bool remove = false);
 	void manageRatingsEntryInIndex(FileData* game, bool remove = false);
 	void manageFavoritesEntryInIndex(FileData* game, bool remove = false);
 	void manageHiddenEntryInIndex(FileData* game, bool remove = false);
@@ -76,7 +74,6 @@ private:
 	bool filterByPlayers;
 	bool filterByPubDev;
 	bool filterByKylton;
-	bool filterBySystem;
 	bool filterByRatings;
 	bool filterByFavorites;
 	bool filterByHidden;
@@ -86,7 +83,6 @@ private:
 	std::map<std::string, int> playersIndexAllKeys;
 	std::map<std::string, int> pubDevIndexAllKeys;
 	std::map<std::string, int> kyltonIndexAllKeys;
-	std::map<std::string, int> systemIndexAllKeys;
 	std::map<std::string, int> ratingsIndexAllKeys;
 	std::map<std::string, int> favoritesIndexAllKeys;
 	std::map<std::string, int> hiddenIndexAllKeys;
@@ -96,7 +92,6 @@ private:
 	std::vector<std::string> playersIndexFilteredKeys;
 	std::vector<std::string> pubDevIndexFilteredKeys;
 	std::vector<std::string> kyltonIndexFilteredKeys;
-	std::vector<std::string> systemIndexFilteredKeys;
 	std::vector<std::string> ratingsIndexFilteredKeys;
 	std::vector<std::string> favoritesIndexFilteredKeys;
 	std::vector<std::string> hiddenIndexFilteredKeys;
