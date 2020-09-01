@@ -20,10 +20,10 @@ FileFilterIndex::FileFilterIndex()
 		{ PLAYER_FILTER, 	&playersIndexAllKeys, 	&filterByPlayers,	&playersIndexFilteredKeys, 	"players",		false,				"",				"PLAYERS"	},
 		{ PUBDEV_FILTER, 	&pubDevIndexAllKeys, 	&filterByPubDev,	&pubDevIndexFilteredKeys, 	"developer",		true,				"publisher",			"PUBLISHER / DEVELOPER"	},
 		{ KYLTON_FILTER, 	&kyltonIndexAllKeys, 	&filterByKylton,	&kyltonIndexFilteredKeys, 	"kylton",		true,				"kylton",			"KYLTON"	},
+		{ SYSTEM_FILTER, 	&systemIndexAllKeys, 	&filterBySystem,	&systemIndexFilteredKeys, 	"system",		true,				"system",			"SYSTEM"	},
 		{ RATINGS_FILTER, 	&ratingsIndexAllKeys, 	&filterByRatings,	&ratingsIndexFilteredKeys, 	"rating",		false,				"",				"RATING"	},
 		{ KIDGAME_FILTER, 	&kidGameIndexAllKeys, 	&filterByKidGame,	&kidGameIndexFilteredKeys, 	"kidgame",		false,				"",				"KIDGAME" },
-		{ HIDDEN_FILTER, 	&hiddenIndexAllKeys, 	&filterByHidden,	&hiddenIndexFilteredKeys, 	"hidden",		false,				"",				"HIDDEN" },
-		{ SYSTEM_FILTER, 	&systemIndexAllKeys, 	&filterBySystem,	&systemIndexFilteredKeys, 	"system",		true,				"system",			"SYSTEM"	}
+		{ HIDDEN_FILTER, 	&hiddenIndexAllKeys, 	&filterByHidden,	&hiddenIndexFilteredKeys, 	"hidden",		false,				"",				"HIDDEN" }
 	};
 
 	filterDataDecl = std::vector<FilterDataDecl>(filterDecls, filterDecls + sizeof(filterDecls) / sizeof(filterDecls[0]));
@@ -52,11 +52,11 @@ void FileFilterIndex::importIndex(FileFilterIndex* indexToImport)
 		{ &playersIndexAllKeys, &(indexToImport->playersIndexAllKeys) },
 		{ &pubDevIndexAllKeys, &(indexToImport->pubDevIndexAllKeys) },
 		{ &kyltonIndexAllKeys, &(indexToImport->kyltonIndexAllKeys) },
+		{ &systemIndexAllKeys, &(indexToImport->systemIndexAllKeys) },
 		{ &ratingsIndexAllKeys, &(indexToImport->ratingsIndexAllKeys) },
 		{ &favoritesIndexAllKeys, &(indexToImport->favoritesIndexAllKeys) },
 		{ &hiddenIndexAllKeys, &(indexToImport->hiddenIndexAllKeys) },
-		{ &kidGameIndexAllKeys, &(indexToImport->kidGameIndexAllKeys) },
-		{ &systemIndexAllKeys, &(indexToImport->systemIndexAllKeys) },
+		{ &kidGameIndexAllKeys, &(indexToImport->kidGameIndexAllKeys) },		
 	};
 
 	std::vector<IndexImportStructure> indexImportDecl = std::vector<IndexImportStructure>(indexStructDecls, indexStructDecls + sizeof(indexStructDecls) / sizeof(indexStructDecls[0]));
