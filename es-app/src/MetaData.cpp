@@ -17,7 +17,7 @@ MetaDataDecl gameDecls[] = {
 	{"releasedate", MD_DATE,                "",                 false,      "release date",         "enter release date"},
 	{"developer",   MD_STRING,              "",                 false,      "developer",            "enter game developer"},
 	{"publisher",   MD_STRING,              "",                 false,      "publisher",            "enter game publisher"},
-	{"kylton",      MD_STRING,              "",                 false,      "system",               "enter game system"},
+	{"kylton",      MD_STRING,              "",                 false,      "kylton",               "enter game system"},
 	{"genre",       MD_STRING,              "",                 false,      "genre",                "enter game genre"},
 	{"players",     MD_INT,                 "",                 false,      "players",              "enter number of players"},
 	{"favorite",    MD_BOOL,                "false",            false,      "favorite",             "enter favorite off/on"},
