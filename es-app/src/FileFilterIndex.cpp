@@ -10,7 +10,7 @@
 #define INCLUDE_UNKNOWN false;
 
 FileFilterIndex::FileFilterIndex()
-	: filterByFavorites(false), filterByGenre(false), filterByHidden(false), filterByKidGame(false), filterByPlayers(false), filterByPubDev(false), filterByKylton(false), filterBySystem(false), filterByRatings(false)
+	: filterByFavorites(false), filterByGenre(false), filterByHidden(false), filterByKidGame(false), filterByPlayers(false), filterByPubDev(false), filterByKylton(false), filterByRatings(false)
 {
 	clearAllFilters();
 	FilterDataDecl filterDecls[] = {
@@ -20,7 +20,6 @@ FileFilterIndex::FileFilterIndex()
 		{ PLAYER_FILTER, 	&playersIndexAllKeys, 	&filterByPlayers,	&playersIndexFilteredKeys, 	"players",		false,				"",				"PLAYERS"	},
 		{ PUBDEV_FILTER, 	&pubDevIndexAllKeys, 	&filterByPubDev,	&pubDevIndexFilteredKeys, 	"developer",		true,				"publisher",			"PUBLISHER / DEVELOPER"	},
 		{ KYLTON_FILTER, 	&kyltonIndexAllKeys, 	&filterByKylton,	&kyltonIndexFilteredKeys, 	"kylton",		true,				"kylton",			"KYLTON"	},
-		{ SYSTEM_FILTER, 	&systemIndexAllKeys, 	&filterBySystem,	&systemIndexFilteredKeys, 	"system",		true,				"system",			"SYSTEM"	},
 		{ RATINGS_FILTER, 	&ratingsIndexAllKeys, 	&filterByRatings,	&ratingsIndexFilteredKeys, 	"rating",		false,				"",				"RATING"	},
 		{ KIDGAME_FILTER, 	&kidGameIndexAllKeys, 	&filterByKidGame,	&kidGameIndexFilteredKeys, 	"kidgame",		false,				"",				"KIDGAME" },
 		{ HIDDEN_FILTER, 	&hiddenIndexAllKeys, 	&filterByHidden,	&hiddenIndexFilteredKeys, 	"hidden",		false,				"",				"HIDDEN" }
@@ -52,11 +51,10 @@ void FileFilterIndex::importIndex(FileFilterIndex* indexToImport)
 		{ &playersIndexAllKeys, &(indexToImport->playersIndexAllKeys) },
 		{ &pubDevIndexAllKeys, &(indexToImport->pubDevIndexAllKeys) },
 		{ &kyltonIndexAllKeys, &(indexToImport->kyltonIndexAllKeys) },
-		{ &systemIndexAllKeys, &(indexToImport->systemIndexAllKeys) },
 		{ &ratingsIndexAllKeys, &(indexToImport->ratingsIndexAllKeys) },
 		{ &favoritesIndexAllKeys, &(indexToImport->favoritesIndexAllKeys) },
 		{ &hiddenIndexAllKeys, &(indexToImport->hiddenIndexAllKeys) },
-		{ &kidGameIndexAllKeys, &(indexToImport->kidGameIndexAllKeys) },		
+		{ &kidGameIndexAllKeys, &(indexToImport->kidGameIndexAllKeys) },
 	};
 
 	std::vector<IndexImportStructure> indexImportDecl = std::vector<IndexImportStructure>(indexStructDecls, indexStructDecls + sizeof(indexStructDecls) / sizeof(indexStructDecls[0]));
@@ -88,7 +86,6 @@ void FileFilterIndex::resetIndex()
 	clearIndex(favoritesIndexAllKeys);
 	clearIndex(hiddenIndexAllKeys);
 	clearIndex(kidGameIndexAllKeys);
-	clearIndex(systemIndexAllKeys);
 }
 
 std::string FileFilterIndex::getIndexableKey(FileData* game, FilterIndexType type, bool getSecondary)
@@ -152,26 +149,7 @@ std::string FileFilterIndex::getIndexableKey(FileData* game, FilterIndexType typ
 				}
 			}
 			break;
-		}
-		case SYSTEM_FILTER:
-		{
-			key = Utils::String::toUpper(game->metadata.get("system"));
-			key = Utils::String::trim(key);
-			if (getSecondary && !key.empty()) {
-				std::istringstream f(key);
-				std::string newKey;
-				getline(f, newKey, '/');
-				if (!newKey.empty() && newKey != key)
-				{
-					key = newKey;
-				}
-				else
-				{
-					key = std::string();
-				}
-			}
-			break;
-		}		
+		}	
 		case RATINGS_FILTER:
 		{
 			int ratingNumber = 0;
@@ -233,7 +211,6 @@ void FileFilterIndex::addToIndex(FileData* game)
 	manageFavoritesEntryInIndex(game);
 	manageHiddenEntryInIndex(game);
 	manageKidGameEntryInIndex(game);
-	manageSystemEntryInIndex(game);
 }
 
 void FileFilterIndex::removeFromIndex(FileData* game)
@@ -246,7 +223,6 @@ void FileFilterIndex::removeFromIndex(FileData* game)
 	manageFavoritesEntryInIndex(game, true);
 	manageHiddenEntryInIndex(game, true);
 	manageKidGameEntryInIndex(game, true);
-	manageSystemEntryInIndex(game, true);
 }
 
 void FileFilterIndex::setFilter(FilterIndexType type, std::vector<std::string>* values)
@@ -328,9 +304,6 @@ void FileFilterIndex::debugPrintIndexes()
 	}
 	for (auto x: kyltonIndexAllKeys) {
 		LOG(LogInfo) << "Kylton Index: " << x.first << ": " << x.second;
-	}
-	for (auto x: systemIndexAllKeys) {
-		LOG(LogInfo) << "System Index: " << x.first << ": " << x.second;
 	}
 	for (auto x: favoritesIndexAllKeys) {
 		LOG(LogInfo) << "Favorites Index: " << x.first << ": " << x.second;
