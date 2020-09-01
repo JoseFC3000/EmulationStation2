@@ -20,10 +20,10 @@ VideoGameListView::VideoGameListView(Window* window, FileData* root) :
 	mVideo(nullptr),
 	mVideoPlaying(false),
 
-	mLblRating(window), mLblReleaseDate(window), mLblDeveloper(window), mLblPublisher(window),
+	mLblRating(window), mLblReleaseDate(window), mLblDeveloper(window), mLblPublisher(window), mLblKylton(window),
 	mLblGenre(window), mLblPlayers(window), mLblLastPlayed(window), mLblPlayCount(window),
 
-	mRating(window), mReleaseDate(window), mDeveloper(window), mPublisher(window),
+	mRating(window), mReleaseDate(window), mDeveloper(window), mPublisher(window), mKylton(window),
 	mGenre(window), mPlayers(window), mLastPlayed(window), mPlayCount(window),
 	mName(window)
 {
@@ -88,6 +88,9 @@ VideoGameListView::VideoGameListView(Window* window, FileData* root) :
 	mLblPublisher.setText("Publisher: ");
 	addChild(&mLblPublisher);
 	addChild(&mPublisher);
+	mLblKylton.setText("Kylton: ");
+	addChild(&mLblKylton);
+	addChild(&mKylton);	
 	mLblGenre.setText("Genre: ");
 	addChild(&mLblGenre);
 	addChild(&mGenre);
@@ -143,7 +146,7 @@ void VideoGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
 	std::vector<TextComponent*> labels = getMDLabels();
 	assert(labels.size() == 8);
 	const char* lblElements[8] = {
-		"md_lbl_rating", "md_lbl_releasedate", "md_lbl_developer", "md_lbl_publisher",
+		"md_lbl_rating", "md_lbl_releasedate", "md_lbl_developer", "md_lbl_publisher", "md_lbl_kylton",
 		"md_lbl_genre", "md_lbl_players", "md_lbl_lastplayed", "md_lbl_playcount"
 	};
 
@@ -157,7 +160,7 @@ void VideoGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
 	std::vector<GuiComponent*> values = getMDValues();
 	assert(values.size() == 8);
 	const char* valElements[8] = {
-		"md_rating", "md_releasedate", "md_developer", "md_publisher",
+		"md_rating", "md_releasedate", "md_developer", "md_publisher", "md_kylton",
 		"md_genre", "md_players", "md_lastplayed", "md_playcount"
 	};
 
@@ -214,6 +217,7 @@ void VideoGameListView::initMDValues()
 	mReleaseDate.setFont(defaultFont);
 	mDeveloper.setFont(defaultFont);
 	mPublisher.setFont(defaultFont);
+	mKylton.setFont(defaultFont);
 	mGenre.setFont(defaultFont);
 	mPlayers.setFont(defaultFont);
 	mLastPlayed.setFont(defaultFont);
@@ -275,6 +279,7 @@ void VideoGameListView::updateInfoPanel()
 		mReleaseDate.setValue(file->metadata.get("releasedate"));
 		mDeveloper.setValue(file->metadata.get("developer"));
 		mPublisher.setValue(file->metadata.get("publisher"));
+		mKylton.setValue(file->metadata.get("kylton"));
 		mGenre.setValue(file->metadata.get("genre"));
 		mPlayers.setValue(file->metadata.get("players"));
 		mName.setValue(file->metadata.get("name"));
@@ -364,6 +369,7 @@ std::vector<TextComponent*> VideoGameListView::getMDLabels()
 	ret.push_back(&mLblReleaseDate);
 	ret.push_back(&mLblDeveloper);
 	ret.push_back(&mLblPublisher);
+	ret.push_back(&mLblKylton);
 	ret.push_back(&mLblGenre);
 	ret.push_back(&mLblPlayers);
 	ret.push_back(&mLblLastPlayed);
@@ -378,6 +384,7 @@ std::vector<GuiComponent*> VideoGameListView::getMDValues()
 	ret.push_back(&mReleaseDate);
 	ret.push_back(&mDeveloper);
 	ret.push_back(&mPublisher);
+	ret.push_back(&mKylton);
 	ret.push_back(&mGenre);
 	ret.push_back(&mPlayers);
 	ret.push_back(&mLastPlayed);
