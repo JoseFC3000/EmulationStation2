@@ -15,11 +15,11 @@ FileFilterIndex::FileFilterIndex()
 	clearAllFilters();
 	FilterDataDecl filterDecls[] = {
 		//type 				//allKeys 				//filteredBy 		//filteredKeys 				//primaryKey 	//hasSecondaryKey 	//secondaryKey 	//menuLabel
-		{ FAVORITES_FILTER, &favoritesIndexAllKeys, &filterByFavorites,	&favoritesIndexFilteredKeys,"favorite",		false,				"",				"FAVORITES"	},
-		{ GENRE_FILTER, 	&genreIndexAllKeys, 	&filterByGenre,		&genreIndexFilteredKeys, 	"genre",		true,				"genre",		"GENRE"	},
+		{ FAVORITES_FILTER, 	&favoritesIndexAllKeys, &filterByFavorites,	&favoritesIndexFilteredKeys,	"favorite",		false,				"",				"FAVORITES"	},
+		{ GENRE_FILTER, 	&genreIndexAllKeys, 	&filterByGenre,		&genreIndexFilteredKeys, 	"genre",		true,				"genre",			"GENRE"	},
 		{ PLAYER_FILTER, 	&playersIndexAllKeys, 	&filterByPlayers,	&playersIndexFilteredKeys, 	"players",		false,				"",				"PLAYERS"	},
-		{ PUBDEV_FILTER, 	&pubDevIndexAllKeys, 	&filterByPubDev,	&pubDevIndexFilteredKeys, 	"developer",	true,				"publisher",	"PUBLISHER / DEVELOPER"	},
-		{ KYLTON_FILTER, 	&kyltonIndexAllKeys, 	&filterByKylton,	&kyltonIndexFilteredKeys, 	"kylton",	true,				"kylton",	"KYLTON"	},
+		{ PUBDEV_FILTER, 	&pubDevIndexAllKeys, 	&filterByPubDev,	&pubDevIndexFilteredKeys, 	"developer",		true,				"publisher",			"PUBLISHER / DEVELOPER"	},
+		{ KYLTON_FILTER, 	&kyltonIndexAllKeys, 	&filterByKylton,	&kyltonIndexFilteredKeys, 	"kylton",		true,				"kylton",			"KYLTON"	},
 		{ RATINGS_FILTER, 	&ratingsIndexAllKeys, 	&filterByRatings,	&ratingsIndexFilteredKeys, 	"rating",		false,				"",				"RATING"	},
 		{ KIDGAME_FILTER, 	&kidGameIndexAllKeys, 	&filterByKidGame,	&kidGameIndexFilteredKeys, 	"kidgame",		false,				"",				"KIDGAME" },
 		{ HIDDEN_FILTER, 	&hiddenIndexAllKeys, 	&filterByHidden,	&hiddenIndexFilteredKeys, 	"hidden",		false,				"",				"HIDDEN" }
@@ -131,6 +131,25 @@ std::string FileFilterIndex::getIndexableKey(FileData* game, FilterIndexType typ
 				key = Utils::String::toUpper(game->metadata.get("publisher"));
 			break;
 		}
+		case KYLTON_FILTER:
+		{
+			key = Utils::String::toUpper(game->metadata.get("kylton"));
+			key = Utils::String::trim(key);
+			if (getSecondary && !key.empty()) {
+				std::istringstream f(key);
+				std::string newKey;
+				getline(f, newKey, '/');
+				if (!newKey.empty() && newKey != key)
+				{
+					key = newKey;
+				}
+				else
+				{
+					key = std::string();
+				}
+			}
+			break;
+		}	
 		case RATINGS_FILTER:
 		{
 			int ratingNumber = 0;
@@ -466,9 +485,9 @@ void FileFilterIndex::manageKyltonEntryInIndex(FileData* game, bool remove)
 		return;
 	}
 
-	manageIndexEntry(&genreIndexAllKeys, key, remove);
+	manageIndexEntry(&kyltonIndexAllKeys, key, remove);
 
-	key = getIndexableKey(game, GENRE_FILTER, true);
+	key = getIndexableKey(game, KYLTON_FILTER, true);
 	if (!includeUnknown && key == UNKNOWN_LABEL)
 	{
 		manageIndexEntry(&kyltonIndexAllKeys, key, remove);
