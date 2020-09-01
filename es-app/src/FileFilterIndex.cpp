@@ -10,7 +10,7 @@
 #define INCLUDE_UNKNOWN false;
 
 FileFilterIndex::FileFilterIndex()
-	: filterByFavorites(false), filterByGenre(false), filterByHidden(false), filterByKidGame(false), filterByPlayers(false), filterByPubDev(false), filterByRatings(false)
+	: filterByFavorites(false), filterByGenre(false), filterByHidden(false), filterByKidGame(false), filterByPlayers(false), filterByPubDev(false), filterByKylton(false), filterByRatings(false)
 {
 	clearAllFilters();
 	FilterDataDecl filterDecls[] = {
@@ -19,6 +19,7 @@ FileFilterIndex::FileFilterIndex()
 		{ GENRE_FILTER, 	&genreIndexAllKeys, 	&filterByGenre,		&genreIndexFilteredKeys, 	"genre",		true,				"genre",		"GENRE"	},
 		{ PLAYER_FILTER, 	&playersIndexAllKeys, 	&filterByPlayers,	&playersIndexFilteredKeys, 	"players",		false,				"",				"PLAYERS"	},
 		{ PUBDEV_FILTER, 	&pubDevIndexAllKeys, 	&filterByPubDev,	&pubDevIndexFilteredKeys, 	"developer",	true,				"publisher",	"PUBLISHER / DEVELOPER"	},
+		{ KYLTON_FILTER, 	&kyltonIndexAllKeys, 	&filterByKylton,	&kyltonIndexFilteredKeys, 	"kylton",	true,				"kylton",	"KYLTON"	},
 		{ RATINGS_FILTER, 	&ratingsIndexAllKeys, 	&filterByRatings,	&ratingsIndexFilteredKeys, 	"rating",		false,				"",				"RATING"	},
 		{ KIDGAME_FILTER, 	&kidGameIndexAllKeys, 	&filterByKidGame,	&kidGameIndexFilteredKeys, 	"kidgame",		false,				"",				"KIDGAME" },
 		{ HIDDEN_FILTER, 	&hiddenIndexAllKeys, 	&filterByHidden,	&hiddenIndexFilteredKeys, 	"hidden",		false,				"",				"HIDDEN" }
@@ -49,6 +50,7 @@ void FileFilterIndex::importIndex(FileFilterIndex* indexToImport)
 		{ &genreIndexAllKeys, &(indexToImport->genreIndexAllKeys) },
 		{ &playersIndexAllKeys, &(indexToImport->playersIndexAllKeys) },
 		{ &pubDevIndexAllKeys, &(indexToImport->pubDevIndexAllKeys) },
+		{ &kyltonIndexAllKeys, &(indexToImport->kyltonIndexAllKeys) },
 		{ &ratingsIndexAllKeys, &(indexToImport->ratingsIndexAllKeys) },
 		{ &favoritesIndexAllKeys, &(indexToImport->favoritesIndexAllKeys) },
 		{ &hiddenIndexAllKeys, &(indexToImport->hiddenIndexAllKeys) },
@@ -79,6 +81,7 @@ void FileFilterIndex::resetIndex()
 	clearIndex(genreIndexAllKeys);
 	clearIndex(playersIndexAllKeys);
 	clearIndex(pubDevIndexAllKeys);
+	clearIndex(kyltonIndexAllKeys);
 	clearIndex(ratingsIndexAllKeys);
 	clearIndex(favoritesIndexAllKeys);
 	clearIndex(hiddenIndexAllKeys);
@@ -184,6 +187,7 @@ void FileFilterIndex::addToIndex(FileData* game)
 	manageGenreEntryInIndex(game);
 	managePlayerEntryInIndex(game);
 	managePubDevEntryInIndex(game);
+	manageKyltonEntryInIndex(game);
 	manageRatingsEntryInIndex(game);
 	manageFavoritesEntryInIndex(game);
 	manageHiddenEntryInIndex(game);
@@ -195,6 +199,7 @@ void FileFilterIndex::removeFromIndex(FileData* game)
 	manageGenreEntryInIndex(game, true);
 	managePlayerEntryInIndex(game, true);
 	managePubDevEntryInIndex(game, true);
+	manageKyltonEntryInIndex(game, true);
 	manageRatingsEntryInIndex(game, true);
 	manageFavoritesEntryInIndex(game, true);
 	manageHiddenEntryInIndex(game, true);
@@ -278,6 +283,9 @@ void FileFilterIndex::debugPrintIndexes()
 	for (auto x: pubDevIndexAllKeys) {
 		LOG(LogInfo) << "PubDev Index: " << x.first << ": " << x.second;
 	}
+	for (auto x: kyltonIndexAllKeys) {
+		LOG(LogInfo) << "Kylton Index: " << x.first << ": " << x.second;
+	}
 	for (auto x: favoritesIndexAllKeys) {
 		LOG(LogInfo) << "Favorites Index: " << x.first << ": " << x.second;
 	}
@@ -346,10 +354,10 @@ bool FileFilterIndex::showFile(FileData* game)
 
 bool FileFilterIndex::isKeyBeingFilteredBy(std::string key, FilterIndexType type)
 {
-	const FilterIndexType filterTypes[7] = { FAVORITES_FILTER, GENRE_FILTER, PLAYER_FILTER, PUBDEV_FILTER, RATINGS_FILTER,HIDDEN_FILTER, KIDGAME_FILTER };
-	std::vector<std::string> filterKeysList[7] = { favoritesIndexFilteredKeys, genreIndexFilteredKeys, playersIndexFilteredKeys, pubDevIndexFilteredKeys, ratingsIndexFilteredKeys, hiddenIndexFilteredKeys, kidGameIndexFilteredKeys };
+	const FilterIndexType filterTypes[8] = { FAVORITES_FILTER, GENRE_FILTER, PLAYER_FILTER, PUBDEV_FILTER, KYLTON_FILTER, RATINGS_FILTER,HIDDEN_FILTER, KIDGAME_FILTER };
+	std::vector<std::string> filterKeysList[8] = { favoritesIndexFilteredKeys, genreIndexFilteredKeys, playersIndexFilteredKeys, pubDevIndexFilteredKeys, kyltonIndexFilteredKeys, ratingsIndexFilteredKeys, hiddenIndexFilteredKeys, kidGameIndexFilteredKeys };
 
-	for (int i = 0; i < 7; i++)
+	for (int i = 0; i < 8; i++)
 	{
 		if (filterTypes[i] == type)
 		{
@@ -441,6 +449,29 @@ void FileFilterIndex::managePubDevEntryInIndex(FileData* game, bool remove)
 			// if no info at all
 			manageIndexEntry(&pubDevIndexAllKeys, pub, remove);
 		}
+	}
+}
+
+void FileFilterIndex::manageKyltonEntryInIndex(FileData* game, bool remove)
+{
+
+	std::string key = getIndexableKey(game, KYLTON_FILTER, false);
+
+	// flag for including unknowns
+	bool includeUnknown = INCLUDE_UNKNOWN;
+
+	// only add unknown in pubdev IF both dev and pub are empty
+	if (!includeUnknown && (key == UNKNOWN_LABEL || key == "BIOS")) {
+		// no valid genre info found
+		return;
+	}
+
+	manageIndexEntry(&genreIndexAllKeys, key, remove);
+
+	key = getIndexableKey(game, GENRE_FILTER, true);
+	if (!includeUnknown && key == UNKNOWN_LABEL)
+	{
+		manageIndexEntry(&kyltonIndexAllKeys, key, remove);
 	}
 }
 
