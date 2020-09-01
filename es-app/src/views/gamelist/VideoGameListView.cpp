@@ -144,8 +144,8 @@ void VideoGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
 
 	initMDLabels();
 	std::vector<TextComponent*> labels = getMDLabels();
-	assert(labels.size() == 8);
-	const char* lblElements[8] = {
+	assert(labels.size() == 9);
+	const char* lblElements[9] = {
 		"md_lbl_rating", "md_lbl_releasedate", "md_lbl_developer", "md_lbl_publisher", "md_lbl_kylton",
 		"md_lbl_genre", "md_lbl_players", "md_lbl_lastplayed", "md_lbl_playcount"
 	};
@@ -158,8 +158,8 @@ void VideoGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
 
 	initMDValues();
 	std::vector<GuiComponent*> values = getMDValues();
-	assert(values.size() == 8);
-	const char* valElements[8] = {
+	assert(values.size() == 9);
+	const char* valElements[9] = {
 		"md_rating", "md_releasedate", "md_developer", "md_publisher", "md_kylton",
 		"md_genre", "md_players", "md_lastplayed", "md_playcount"
 	};
