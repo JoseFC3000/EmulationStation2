@@ -22,7 +22,8 @@ FileFilterIndex::FileFilterIndex()
 		{ KYLTON_FILTER, 	&kyltonIndexAllKeys, 	&filterByKylton,	&kyltonIndexFilteredKeys, 	"kylton",		true,				"kylton",			"KYLTON"	},
 		{ RATINGS_FILTER, 	&ratingsIndexAllKeys, 	&filterByRatings,	&ratingsIndexFilteredKeys, 	"rating",		false,				"",				"RATING"	},
 		{ KIDGAME_FILTER, 	&kidGameIndexAllKeys, 	&filterByKidGame,	&kidGameIndexFilteredKeys, 	"kidgame",		false,				"",				"KIDGAME" },
-		{ HIDDEN_FILTER, 	&hiddenIndexAllKeys, 	&filterByHidden,	&hiddenIndexFilteredKeys, 	"hidden",		false,				"",				"HIDDEN" }
+		{ HIDDEN_FILTER, 	&hiddenIndexAllKeys, 	&filterByHidden,	&hiddenIndexFilteredKeys, 	"hidden",		false,				"",				"HIDDEN" },
+		{ SYSTEM_FILTER, 	&systemIndexAllKeys, 	&filterBySystem,	&systemIndexFilteredKeys, 	"system",		true,				"system",			"SYSTEM"	}
 	};
 
 	filterDataDecl = std::vector<FilterDataDecl>(filterDecls, filterDecls + sizeof(filterDecls) / sizeof(filterDecls[0]));
@@ -55,6 +56,7 @@ void FileFilterIndex::importIndex(FileFilterIndex* indexToImport)
 		{ &favoritesIndexAllKeys, &(indexToImport->favoritesIndexAllKeys) },
 		{ &hiddenIndexAllKeys, &(indexToImport->hiddenIndexAllKeys) },
 		{ &kidGameIndexAllKeys, &(indexToImport->kidGameIndexAllKeys) },
+		{ &systemIndexAllKeys, &(indexToImport->systemIndexAllKeys) },
 	};
 
 	std::vector<IndexImportStructure> indexImportDecl = std::vector<IndexImportStructure>(indexStructDecls, indexStructDecls + sizeof(indexStructDecls) / sizeof(indexStructDecls[0]));
@@ -86,6 +88,7 @@ void FileFilterIndex::resetIndex()
 	clearIndex(favoritesIndexAllKeys);
 	clearIndex(hiddenIndexAllKeys);
 	clearIndex(kidGameIndexAllKeys);
+	clearIndex(systemIndexAllKeys);
 }
 
 std::string FileFilterIndex::getIndexableKey(FileData* game, FilterIndexType type, bool getSecondary)
@@ -149,7 +152,26 @@ std::string FileFilterIndex::getIndexableKey(FileData* game, FilterIndexType typ
 				}
 			}
 			break;
-		}	
+		}
+		case SYSTEM_FILTER:
+		{
+			key = Utils::String::toUpper(game->metadata.get("system"));
+			key = Utils::String::trim(key);
+			if (getSecondary && !key.empty()) {
+				std::istringstream f(key);
+				std::string newKey;
+				getline(f, newKey, '/');
+				if (!newKey.empty() && newKey != key)
+				{
+					key = newKey;
+				}
+				else
+				{
+					key = std::string();
+				}
+			}
+			break;
+		}		
 		case RATINGS_FILTER:
 		{
 			int ratingNumber = 0;
@@ -211,6 +233,7 @@ void FileFilterIndex::addToIndex(FileData* game)
 	manageFavoritesEntryInIndex(game);
 	manageHiddenEntryInIndex(game);
 	manageKidGameEntryInIndex(game);
+	manageSystemEntryInIndex(game);
 }
 
 void FileFilterIndex::removeFromIndex(FileData* game)
@@ -223,6 +246,7 @@ void FileFilterIndex::removeFromIndex(FileData* game)
 	manageFavoritesEntryInIndex(game, true);
 	manageHiddenEntryInIndex(game, true);
 	manageKidGameEntryInIndex(game, true);
+	manageSystemEntryInIndex(game, true);
 }
 
 void FileFilterIndex::setFilter(FilterIndexType type, std::vector<std::string>* values)
@@ -304,6 +328,9 @@ void FileFilterIndex::debugPrintIndexes()
 	}
 	for (auto x: kyltonIndexAllKeys) {
 		LOG(LogInfo) << "Kylton Index: " << x.first << ": " << x.second;
+	}
+	for (auto x: systemIndexAllKeys) {
+		LOG(LogInfo) << "System Index: " << x.first << ": " << x.second;
 	}
 	for (auto x: favoritesIndexAllKeys) {
 		LOG(LogInfo) << "Favorites Index: " << x.first << ": " << x.second;
