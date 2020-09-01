@@ -31,6 +31,9 @@ namespace FileSorts
 
 		FileData::SortType(&comparePublisher, true, "publisher, ascending"),
 		FileData::SortType(&comparePublisher, false, "publisher, descending"),
+		
+		FileData::SortType(&compareKylton, true, "publisher, ascending"),
+		FileData::SortType(&compareKylton, false, "publisher, descending"),
 
 		FileData::SortType(&compareSystem, true, "system, ascending"),
 		FileData::SortType(&compareSystem, false, "system, descending")
@@ -106,6 +109,13 @@ namespace FileSorts
 	{
 		std::string publisher1 = Utils::String::toUpper(file1->metadata.get("publisher"));
 		std::string publisher2 = Utils::String::toUpper(file2->metadata.get("publisher"));
+		return publisher1.compare(publisher2) < 0;
+	}
+	
+	bool comparePublisher(const FileData* file1, const FileData* file2)
+	{
+		std::string publisher1 = Utils::String::toUpper(file1->metadata.get("kylton"));
+		std::string publisher2 = Utils::String::toUpper(file2->metadata.get("kylton"));
 		return publisher1.compare(publisher2) < 0;
 	}
 
