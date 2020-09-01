@@ -81,7 +81,7 @@ namespace FileSorts
 
 	bool compareNumPlayers(const FileData* file1, const FileData* file2)
 	{
-		return (file1)->metadata.getInt("players") < (file2)->metadata.getInt("players");
+		return (file1)->metadata.get("players") < (file2)->metadata.get("players");
 	}
 
 	bool compareReleaseDate(const FileData* file1, const FileData* file2)
