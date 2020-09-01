@@ -32,8 +32,8 @@ namespace FileSorts
 		FileData::SortType(&comparePublisher, true, "publisher, ascending"),
 		FileData::SortType(&comparePublisher, false, "publisher, descending"),
 		
-		FileData::SortType(&compareKylton, true, "publisher, ascending"),
-		FileData::SortType(&compareKylton, false, "publisher, descending"),
+		FileData::SortType(&compareKylton, true, "kylton, ascending"),
+		FileData::SortType(&compareKylton, false, "kylton, descending"),
 
 		FileData::SortType(&compareSystem, true, "system, ascending"),
 		FileData::SortType(&compareSystem, false, "system, descending")
