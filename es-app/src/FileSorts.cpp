@@ -112,11 +112,11 @@ namespace FileSorts
 		return publisher1.compare(publisher2) < 0;
 	}
 	
-	bool comparePublisher(const FileData* file1, const FileData* file2)
+	bool compareKylton(const FileData* file1, const FileData* file2)
 	{
-		std::string publisher1 = Utils::String::toUpper(file1->metadata.get("kylton"));
-		std::string publisher2 = Utils::String::toUpper(file2->metadata.get("kylton"));
-		return publisher1.compare(publisher2) < 0;
+		std::string kylton1 = Utils::String::toUpper(file1->metadata.get("kylton"));
+		std::string kylton2 = Utils::String::toUpper(file2->metadata.get("kylton"));
+		return kylton1.compare(kylton2) < 0;
 	}
 
 	bool compareSystem(const FileData* file1, const FileData* file2)
