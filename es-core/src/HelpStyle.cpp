@@ -4,8 +4,8 @@
 
 HelpStyle::HelpStyle()
 {
-	position = Vector2f(Renderer::getScreenWidth() * 0.012f, Renderer::getScreenHeight() * 0.9515f);
-	origin = Vector2f(0.0f, 0.0f);
+	position = Vector2f(Renderer::getScreenWidth() * 0.5f, Renderer::getScreenHeight() * 0.9515f);
+	origin = Vector2f(0.5f, 0.0f);
 	iconColor = 0x777777FF;
 	textColor = 0x777777FF;
 
