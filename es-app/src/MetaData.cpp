@@ -19,7 +19,7 @@ MetaDataDecl gameDecls[] = {
 	{"publisher",   MD_STRING,              "",                 false,      "publisher",            "enter game publisher"},
 	{"hardware",    MD_STRING,              "",                 false,      "hardware",             "enter game hardware"},
 	{"region",      MD_STRING,              "",                 false,      "region",               "enter game region"},
-	{"info",        MD_STRING,              "",                 false,      "information",          "enter game information"},
+	{"information", MD_STRING,              "",                 false,      "information",          "enter game information"},
 	{"genre",       MD_STRING,              "",                 false,      "genre",                "enter game genre"},
 	{"players",     MD_INT,                 "",                 false,      "players",              "enter number of players"},
 	{"favorite",    MD_BOOL,                "false",            false,      "favorite",             "enter favorite off/on"},
@@ -44,7 +44,7 @@ MetaDataDecl folderDecls[] = {
 	{"publisher",   MD_STRING,              "",                 false,      "publisher",            "enter game publisher"},
 	{"hardware",    MD_STRING,              "",                 false,      "hardware",             "enter game hardware"},
 	{"region",      MD_STRING,              "",                 false,      "region",               "enter game region"},
-	{"info",    	MD_STRING,              "",                 false,      "information",          "enter game information"},
+	{"information", MD_STRING,              "",                 false,      "information",          "enter game information"},
 	{"genre",       MD_STRING,              "",                 false,      "genre",                "enter game genre"},
 	{"players",     MD_INT,                 "",                 false,      "players",              "enter number of players"}
 };
