@@ -17,7 +17,9 @@ MetaDataDecl gameDecls[] = {
 	{"releasedate", MD_DATE,                "",                 false,      "release date",         "enter release date"},
 	{"developer",   MD_STRING,              "",                 false,      "developer",            "enter game developer"},
 	{"publisher",   MD_STRING,              "",                 false,      "publisher",            "enter game publisher"},
-	{"kylton",      MD_STRING,              "",                 false,      "kylton",               "enter game system"},
+	{"hardware",    MD_STRING,              "",                 false,      "hardware",             "enter game hardware"},
+	{"region",      MD_STRING,              "",                 false,      "region",               "enter game region"},
+	{"info",        MD_STRING,              "",                 false,      "information",          "enter game information"},
 	{"genre",       MD_STRING,              "",                 false,      "genre",                "enter game genre"},
 	{"players",     MD_INT,                 "",                 false,      "players",              "enter number of players"},
 	{"favorite",    MD_BOOL,                "false",            false,      "favorite",             "enter favorite off/on"},
@@ -40,7 +42,9 @@ MetaDataDecl folderDecls[] = {
 	{"releasedate", MD_DATE,                "",                 false,      "release date",         "enter release date"},
 	{"developer",   MD_STRING,              "",                 false,      "developer",            "enter game developer"},
 	{"publisher",   MD_STRING,              "",                 false,      "publisher",            "enter game publisher"},
-	{"kylton",      MD_STRING,              "",                 false,      "kylton",               "enter game system"},
+	{"hardware",    MD_STRING,              "",                 false,      "hardware",             "enter game hardware"},
+	{"region",      MD_STRING,              "",                 false,      "region",               "enter game region"},
+	{"info",    	MD_STRING,              "",                 false,      "information",          "enter game information"},
 	{"genre",       MD_STRING,              "",                 false,      "genre",                "enter game genre"},
 	{"players",     MD_INT,                 "",                 false,      "players",              "enter number of players"}
 };
