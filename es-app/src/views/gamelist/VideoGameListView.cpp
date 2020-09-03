@@ -20,10 +20,10 @@ VideoGameListView::VideoGameListView(Window* window, FileData* root) :
 	mVideo(nullptr),
 	mVideoPlaying(false),
 
-	mLblRating(window), mLblReleaseDate(window), mLblDeveloper(window), mLblPublisher(window), mLblKylton(window),
+	mLblRating(window), mLblReleaseDate(window), mLblDeveloper(window), mLblPublisher(window), mLblHardware(window), mLblRegion(window), mLblInformation(window),
 	mLblGenre(window), mLblPlayers(window), mLblLastPlayed(window), mLblPlayCount(window),
 
-	mRating(window), mReleaseDate(window), mDeveloper(window), mPublisher(window), mKylton(window),
+	mRating(window), mReleaseDate(window), mDeveloper(window), mPublisher(window), mHardware(window), mRegion(window), mInformation(window),
 	mGenre(window), mPlayers(window), mLastPlayed(window), mPlayCount(window),
 	mName(window)
 {
@@ -88,9 +88,15 @@ VideoGameListView::VideoGameListView(Window* window, FileData* root) :
 	mLblPublisher.setText("Publisher: ");
 	addChild(&mLblPublisher);
 	addChild(&mPublisher);
-	mLblKylton.setText("Kylton: ");
-	addChild(&mLblKylton);
-	addChild(&mKylton);	
+	mLblHardware.setText("Hardware: ");
+	addChild(&mLblHardware);
+	addChild(&mHardware);
+	mLblRegion.setText("Region: ");
+	addChild(&mLblRegion);
+	addChild(&mRegion);
+	mLblInformation.setText("Information: ");
+	addChild(&mLblInformation);
+	addChild(&mInformation);		
 	mLblGenre.setText("Genre: ");
 	addChild(&mLblGenre);
 	addChild(&mGenre);
@@ -144,9 +150,9 @@ void VideoGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
 
 	initMDLabels();
 	std::vector<TextComponent*> labels = getMDLabels();
-	assert(labels.size() == 9);
-	const char* lblElements[9] = {
-		"md_lbl_rating", "md_lbl_releasedate", "md_lbl_developer", "md_lbl_publisher", "md_lbl_kylton",
+	assert(labels.size() == 11);
+	const char* lblElements[11] = {
+		"md_lbl_rating", "md_lbl_releasedate", "md_lbl_developer", "md_lbl_publisher", "md_lbl_hardware", "md_lbl_region", "md_lbl_information",
 		"md_lbl_genre", "md_lbl_players", "md_lbl_lastplayed", "md_lbl_playcount"
 	};
 
@@ -158,9 +164,9 @@ void VideoGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
 
 	initMDValues();
 	std::vector<GuiComponent*> values = getMDValues();
-	assert(values.size() == 9);
-	const char* valElements[9] = {
-		"md_rating", "md_releasedate", "md_developer", "md_publisher", "md_kylton",
+	assert(values.size() == 11);
+	const char* valElements[11] = {
+		"md_rating", "md_releasedate", "md_developer", "md_publisher", "md_hardware", "md_region", "md_information",
 		"md_genre", "md_players", "md_lastplayed", "md_playcount"
 	};
 
@@ -217,7 +223,9 @@ void VideoGameListView::initMDValues()
 	mReleaseDate.setFont(defaultFont);
 	mDeveloper.setFont(defaultFont);
 	mPublisher.setFont(defaultFont);
-	mKylton.setFont(defaultFont);
+	mHardware.setFont(defaultFont);
+	mRegion.setFont(defaultFont);
+	mInformation.setFont(defaultFont);
 	mGenre.setFont(defaultFont);
 	mPlayers.setFont(defaultFont);
 	mLastPlayed.setFont(defaultFont);
@@ -279,7 +287,9 @@ void VideoGameListView::updateInfoPanel()
 		mReleaseDate.setValue(file->metadata.get("releasedate"));
 		mDeveloper.setValue(file->metadata.get("developer"));
 		mPublisher.setValue(file->metadata.get("publisher"));
-		mKylton.setValue(file->metadata.get("kylton"));
+		mHardware.setValue(file->metadata.get("hardware"));
+		mRegion.setValue(file->metadata.get("region"));
+		mInformation.setValue(file->metadata.get("information"));
 		mGenre.setValue(file->metadata.get("genre"));
 		mPlayers.setValue(file->metadata.get("players"));
 		mName.setValue(file->metadata.get("name"));
@@ -369,7 +379,9 @@ std::vector<TextComponent*> VideoGameListView::getMDLabels()
 	ret.push_back(&mLblReleaseDate);
 	ret.push_back(&mLblDeveloper);
 	ret.push_back(&mLblPublisher);
-	ret.push_back(&mLblKylton);
+	ret.push_back(&mLblHardware);
+	ret.push_back(&mLblRegion);
+	ret.push_back(&mLblInformation);
 	ret.push_back(&mLblGenre);
 	ret.push_back(&mLblPlayers);
 	ret.push_back(&mLblLastPlayed);
@@ -384,7 +396,9 @@ std::vector<GuiComponent*> VideoGameListView::getMDValues()
 	ret.push_back(&mReleaseDate);
 	ret.push_back(&mDeveloper);
 	ret.push_back(&mPublisher);
-	ret.push_back(&mKylton);
+	ret.push_back(&mHardware);
+	ret.push_back(&mRegion);
+	ret.push_back(&mInformation);
 	ret.push_back(&mGenre);
 	ret.push_back(&mPlayers);
 	ret.push_back(&mLastPlayed);
