@@ -181,12 +181,12 @@ void ViewController::playViewTransition()
 		}else{
 			advanceAnimation(0, (int)(mFadeOpacity * FADE_DURATION));
 		}
-	} else if (transition_style == "slide"){
+	} else if (transition_style == "instant"){
 		// slide or simple slide
 		setAnimation(new MoveCameraAnimation(mCamera, target));
 		updateHelpPrompts(); // update help prompts immediately
 	} else {
-		// instant
+		// slide
 		setAnimation(new LambdaAnimation(
 			[this, target](float /*t*/)
 		{
